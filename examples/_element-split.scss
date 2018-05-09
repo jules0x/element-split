@@ -1,0 +1,38 @@
+.element-split {
+  display: flex;
+}
+
+.split {
+  &-text,
+  &-image {
+    flex-basis: 50%;
+  }
+
+  &-text {
+    padding: 30px 40px;
+
+    .prefer__Content & {
+      flex-basis: 65%;
+    }
+
+    .prefer__Image & {
+      flex-basis: 35%;
+    }
+  }
+
+  &-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 350px;
+    width: 100%;
+
+    .prefer__Content & {
+      flex-basis: 35%;
+    }
+
+    .prefer__Image & {
+      flex-basis: 65%;
+    }
+  }
+}

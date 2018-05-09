@@ -1,0 +1,23 @@
+{
+  "name": "jules0x/element-split",
+  "type": "silverstripe-vendormodule",
+  "description": " A two piece element (HTML and image), with CMS configuration.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Julian Thomson",
+      "email": "thebreaks@live.com"
+    }
+  ],
+  "require": {
+    "composer/installers": "*",
+    "silverstripe/framework": "^4.1",
+    "silverstripe/vendor-plugin": "^1",
+    "dnadesign/silverstripe-elemental": "^2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Jules0x\\Elements\\": "src/"
+    }
+  }
+}
