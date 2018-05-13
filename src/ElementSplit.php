@@ -53,21 +53,14 @@ class ElementSplit extends BaseElement
         $align = OptionsetField::create(
             'Align',
             'Image placement',
-            [
-                'Left' => 'Left',
-                'Right' => 'Right'
-            ],
+            singleton('Jules0x\Elements\ElementSplit')->dbObject('Align')->enumValues(),
             'Right'
         );
 
         $prefer = OptionsetField::create(
             'Prefer',
             'Give extra width to...',
-            [
-                'Image' => 'Image',
-                'Content' => 'Content',
-                'Neither' => 'Neither'
-            ],
+            singleton('Jules0x\Elements\ElementSplit')->dbObject('Prefer')->enumValues(),
             'Neither'
         );
 
