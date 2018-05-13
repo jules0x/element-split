@@ -12,7 +12,13 @@ use SilverStripe\Forms\TextField;
 
 class ElementSplit extends BaseElement
 {
-    private static $icon = 'font-icon-block-content';
+    private static $icon = 'font-icon-block-banner';
+
+    private static $table_name = 'ElementSplit';
+
+    private static $singular_name = 'Split element';
+
+    private static $description = 'Image and HTML text element';
 
     private static $db = [
         'HTML' => 'HTMLText',
@@ -26,12 +32,6 @@ class ElementSplit extends BaseElement
     ];
 
     private static $owns = ['Image'];
-
-    private static $table_name = 'ElementSplit';
-
-    private static $singular_name = 'Split element';
-
-    private static $description = 'Image and HTML text element';
 
     public function getCMSFields()
     {
@@ -71,10 +71,8 @@ class ElementSplit extends BaseElement
             $prefer,
         ], 'HTML');
 
-
         $fields->addFieldsToTab('Root.Settings', [
-            NumericField::create('MinHeight', 'Minimum height')
-            ->setRightTitle('px')
+            NumericField::create('MinHeight', 'Minimum height')->setRightTitle('px')
         ]);
 
         return $fields;
@@ -89,6 +87,6 @@ class ElementSplit extends BaseElement
 
     public function getType()
     {
-        return 'Split element';
+        return $this->config()->get('singular_name');
     }
 }
