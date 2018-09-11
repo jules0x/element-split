@@ -12,16 +12,16 @@ use SilverStripe\Forms\TextField;
 
 class ElementSplit extends BaseElement
 {
-    private static $icon = 'font-icon-block-banner';
+    private static $icon = 'font-icon-columns';
 
     private static $table_name = 'ElementSplit';
 
     private static $singular_name = 'Split element';
 
-    private static $description = 'Image and HTML text element';
+    private static $description = 'Image and HTML text side-by-side';
 
     private static $db = [
-        'HTML' => 'HTMLText',
+        'Content' => 'HTMLText',
         'Align' => 'Enum("Left, Right", "Right")',
         'Prefer' => 'Enum("Neither, Image, Content")',
         'MinHeight' => 'Int'
@@ -31,25 +31,34 @@ class ElementSplit extends BaseElement
         'Image' => Image::class
     ];
 
-    private static $owns = ['Image'];
+    private static $owns = [
+        'Image'
+    ];
 
     public function getCMSFields()
     {
-        $this->beforeUpdateCMSFields(function ($fields) {
-            $fields
-                ->fieldByName('Root.Main.HTML')
-                ->setTitle(_t(__CLASS__ . '.ContentLabel', 'Content'));
-        });
-
         $fields = parent::getCMSFields();
 
-        $fields->removeByName([
-            'TitleAndDisplayed'
-        ]);
+        $this->addContentFields($fields);
+        $this->addSettingsFields($fields);
 
-        $imageUpload = UploadField::create('Image', 'Featured Image');
+        return $fields;
+    }
+
+    private function addContentFields($fields)
+    {
+        $imageUpload = UploadField::create('Image');
         $imageUpload->getValidator()->setAllowedExtensions(['jpg', 'jpeg', 'png']);
 
+        $fields->addFieldsToTab('Root.Main', [
+            $imageUpload
+        ], 'Content');
+
+        return $fields;
+    }
+
+    private function addSettingsFields($fields)
+    {
         $align = OptionsetField::create(
             'Align',
             'Image placement',
@@ -64,14 +73,9 @@ class ElementSplit extends BaseElement
             'Neither'
         );
 
-        $fields->addFieldsToTab('Root.Main', [
-            TextField::create('Title'),
-            $imageUpload,
+        $fields->addFieldsToTab('Root.Settings', [
             $align,
             $prefer,
-        ], 'HTML');
-
-        $fields->addFieldsToTab('Root.Settings', [
             NumericField::create('MinHeight', 'Minimum height')->setRightTitle('px')
         ]);
 
